@@ -1,7 +1,10 @@
+version: 2.1
+
 jobs:
-  build-android:
-    docker:
-      - image: circleci/android:api-25-alpha
-        auth:
-          username: mydockerhub-user
-          password: $DOCKERHUB_PASSWORD  # context / project UI env-var reference
+  build:
+    machine:
+      resource_class: gpu.nvidia.small
+      image: ubuntu-1604-cuda-10.1:201909-23
+    steps:
+      - run: nvidia-smi
+      - run: docker run --gpus all nvidia/cuda:9.0-base nvidia-smi
